@@ -11,6 +11,11 @@ if (!isset($_GET['uid'])) {
     $point = "POINT({$lat} {$lon})";
     mysql_query("INSERT INTO `user` VALUES (null, '{$name}', PointFromText('{$point}'), null)");
     $userUID = mysql_insert_id();
+    if ($name == '') {
+        $name = 'Гость_' . $userUID;
+        $name = mysql_real_escape_string($name);
+        mysql_query("UPDATE `user` SET nick='{$name}' WHERE id={$userUID}");
+    }
     print json_encode(array('uid' => $userUID));
 } else {
     /**
@@ -19,7 +24,6 @@ if (!isset($_GET['uid'])) {
     $userUID = intval($_GET['uid']);
     $lat = floatval($_GET['lat']);
     $lon = floatval($_GET['lon']);
-    $point = "POINT({$lat} {$lon})";
-    mysql_query("UPDATE `user` SET  PointFromText('{$point}') WHERE id={$userUID}");
+    updateUserPosition($userUID, $lat, $lon);
     print json_encode(array('uid' => $userUID));
 }

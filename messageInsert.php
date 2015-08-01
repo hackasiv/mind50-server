@@ -27,8 +27,7 @@ WHERE (geodist(X(u.geo), Y(u.geo), {$lat}, {$lon})*1000)<={$distans}");
     /**
      * обновление позиции пользователя
      */
-    $point = "POINT({$lat} {$lon})";
-    mysql_query("UPDATE `user` SET  PointFromText('{$point}') WHERE id={$uid}");
+    updateUserPosition($uid, $lat, $lon);
     print json_encode(array('message' => 'accepted'));
 } else {
     print json_encode(array('error' => 'incorect parametrs'));
