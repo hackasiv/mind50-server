@@ -13,10 +13,8 @@
 -- Дамп структуры для функция mind50.geodist
 DROP FUNCTION IF EXISTS `geodist`;
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` FUNCTION `geodist`(
-  src_lat DECIMAL(9,6), src_lon DECIMAL(9,6),
-  dst_lat DECIMAL(9,6), dst_lon DECIMAL(9,6)
-) RETURNS decimal(6,2)
+CREATE DEFINER=`root`@`localhost` FUNCTION `geodist`(`src_lat` DECIMAL(12,9), `src_lon` DECIMAL(12,9), `dst_lat` DECIMAL(12,9), `dst_lon` DECIMAL(12,9)
+) RETURNS decimal(12,4)
     DETERMINISTIC
 BEGIN
  SET @dist := 6371 * 2 * ASIN(SQRT(
