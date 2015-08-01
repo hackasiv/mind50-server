@@ -16,4 +16,4 @@ if ($name == '') {
     $name = mysql_real_escape_string($name);
     mysql_query("UPDATE `user` SET nick='{$name}' WHERE id={$userUID}");
 }
-print json_encode(array('uid' => $userUID));
+print json_encode(array('uid' => $userUID, 'total' => getCount($lat, $lon)));
