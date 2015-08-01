@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Слушатель</title>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <style type="text/css">
+            #messagesList {
+                background-color: #F0F0F0;
+                max-width: 600px;
+
+            }
+            #messagesList div span:first-child {
+                display: inline-block;
+                padding: 4px;
+                font-weight: bold;
+            }
+        </style>
+        <script type="text/javascript">
+            var currentUID = null;
+            var lat = null;
+            var lon = null;
+            var nick = null;
+            
+            function teleport() {
+                lat = $('#lat').val();
+                lon = $('#lon').val();
+                nick = $('#nick').val();
+                $.getJSON(   "/uid/" + lat + "/"+lon + "/" + nick, function(data) {
+                    if (currentUID==null) {
+                        setTimeout(listMessages, 2000);
+                    }
+                    currentUID = data.uid;
+                });
+            }
+            
+            function listMessages() {
+                $.getJSON(   "/message/"+currentUID+"/"+lat+"/"+lon, function(data) {
+                    for(i in data) {
+                        message = data[i];
+                        $("#messagesList").append("<div><span>" +
+                            message.nick + ":</span><span>"+
+                            message.message + "</span></div>");
+                    }
+                    setTimeout(listMessages, 2000);
+                });
+            }
+            
+            function sendMessage() {
+                var text = $("#messageText").val();
+                $("#messageText").val("");
+                $.post("/message/", {uid:currentUID, lat:lat, lon:lon, message:text});
+            }
+            
+        </script>
+    </head>
+    <body>
+        <div>
+            Ник <input type="text" id="nick"> <br/>
+            Широта <input type="text" id="lat"><br/>
+            Долгота <input type="text" id="lon"><br/>
+            <button onclick="teleport()">Телепорт</button>
+        </div>
+        <div>
+            <div id="messagesList"></div>
+            <input type="text" id="messageText" />
+            <button onclick="sendMessage()">Подумать</button>
+        </div>
+    </body>
+</html>

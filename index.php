@@ -1,5 +1,6 @@
 <?php
 
+header('Content-type: text/html; charset=utf8');
 include('bd.php');
 include('router.php');
 if ($_GET['action'] == 'uid') {
@@ -10,6 +11,8 @@ if ($_GET['action'] == 'uid') {
     include('messageList.php');
 } else if ($_GET['action'] == 'position') {
     include('position.php');
+} else if ($_GET['action'] == 'web') {
+    include("web.html");
 }
 
 mysql_close($mysqlLink);

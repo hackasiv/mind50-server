@@ -1,3 +1,8 @@
+
+# dnwr_ip   192.168.2.199
+# dnwr_host custom-host
+# dnwr_port 80  
+
 RewriteEngine on
 RewriteBase /
 
