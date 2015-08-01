@@ -52,6 +52,13 @@
                 $.post("/message/", {uid:currentUID, lat:lat, lon:lon, message:text});
             }
             
+            function testEnter(event) {
+                event = event || window.event;
+                if ((event.keyCode == 0xA)||(event.keyCode == 0xD))  {
+                    sendMessage();
+                    return false;
+                } 
+            }
         </script>
     </head>
     <body>
@@ -63,7 +70,7 @@
         </div>
         <div>
             <div id="messagesList"></div>
-            <input type="text" id="messageText" />
+            <input type="text" id="messageText" onkeyup="testEnter(event)"/>
             <button onclick="sendMessage()">Подумать</button>
         </div>
     </body>

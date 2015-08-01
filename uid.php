@@ -6,7 +6,8 @@
  */
 $lat = floatval(isset($rout[2]) ? $rout[2] : 0);
 $lon = floatval(isset($rout[3]) ? $rout[3] : 0);
-$name = mysql_real_escape_string(isset($rout[4]) ? $rout[4] : '');
+$name = urldecode(isset($rout[4]) ? $rout[4] : '');
+$name = mysql_real_escape_string($name);
 $point = "POINT({$lat} {$lon})";
 mysql_query("INSERT INTO `user` VALUES (null, '{$name}', PointFromText('{$point}'), null)");
 $userUID = mysql_insert_id();
