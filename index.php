@@ -1,6 +1,7 @@
 <?php
 
 header('Content-type: text/html; charset=utf8');
+header("Access-Control-Allow-Origin: *");
 include('bd.php');
 include('router.php');
 if ($_GET['action'] == 'uid') {
