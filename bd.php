@@ -16,6 +16,7 @@ function updateUserPosition($userUID, $lat, $lon) {
      * пользователь есть, обновляем его позицию
      */
     mysql_query("UPDATE `user` SET  PointFromText('{$point}') WHERE id={$userUID}");
+    mysql_query("UPDATE `user` SET  last_time=NOW() WHERE id={$userUID}");
 }
 
 function getCount($lat, $lon) {
